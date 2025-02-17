@@ -3,7 +3,7 @@ from mastodon import Mastodon
 
 # Load Mastodon credentials
 ACCESS_TOKEN = os.getenv("MASTODON_ACCESS_TOKEN")
-MASTODON_INSTANCE = "https://mastodon.bot"
+MASTODON_INSTANCE = "https://mastodon.social"
 
 # Initialize Mastodon API
 mastodon = Mastodon(access_token=ACCESS_TOKEN, api_base_url=MASTODON_INSTANCE)
