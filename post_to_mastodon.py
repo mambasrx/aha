@@ -10,6 +10,7 @@ mastodon = Mastodon(access_token=ACCESS_TOKEN, api_base_url=MASTODON_INSTANCE)
 
 # Read and update posts.txt
 POSTS_FILE = "posts.txt"
+ARCHIVE_FILE = "archive.txt"
 
 with open(POSTS_FILE, "r", encoding="utf-8") as f:
     posts = f.readlines()
@@ -25,6 +26,12 @@ post_content = posts.pop(0).strip()
 mastodon.status_post(post_content)
 print(f"Posted: {post_content}")
 
-# Update the file without the posted line
+# Append the post to archive.txt
+with open(ARCHIVE_FILE, "a", encoding="utf-8") as f:
+    f.write(post_content + "\n")
+
+# Update the posts.txt without the posted line
 with open(POSTS_FILE, "w", encoding="utf-8") as f:
     f.writelines(posts)
+
+print("Post archived and removed from posts.txt")
