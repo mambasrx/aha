@@ -2,7 +2,7 @@ name: Aha Alan Partridge Bot Daily Post
 
 on:
   schedule:
-    - cron: "0 10 * * *"  # Runs every day at 10 AM UTC
+    - cron: "0 17 * * *"  # Runs every day at 3 PM UTC/10 AM EST
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
