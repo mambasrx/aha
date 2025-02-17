@@ -1,0 +1,36 @@
+name: Aha Alan Partridge Bot Daily Post
+
+on:
+  schedule:
+    - cron: "0 10 * * *"  # Runs every day at 10 AM UTC
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  post_to_mastodon:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install Mastodon.py
+
+      - name: Run Mastodon bot
+        env:
+          MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+        run: python post_to_mastodon.py
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add posts.txt
+          git commit -m "Remove posted item"
+          git push
+        continue-on-error: true  # Avoid failure if no changes were made
